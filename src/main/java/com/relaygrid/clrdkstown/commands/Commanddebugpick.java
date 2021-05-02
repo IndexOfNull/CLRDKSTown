@@ -17,7 +17,7 @@ import org.bukkit.persistence.PersistentDataType;
 import com.relaygrid.clrdkstown.CLRDKSTown;
 import com.relaygrid.clrdkstown.Keys;
 
-public class DebugGivePick extends TownCommand {
+public class Commanddebugpick extends TownCommand {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) throws NotEnoughArgumentsException, PlayerNotFoundException {

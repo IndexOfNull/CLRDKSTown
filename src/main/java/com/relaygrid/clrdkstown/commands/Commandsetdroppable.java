@@ -1,8 +1,13 @@
 package com.relaygrid.clrdkstown.commands;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,7 +19,7 @@ import org.bukkit.persistence.PersistentDataType;
 import com.relaygrid.clrdkstown.CLRDKSTown;
 import com.relaygrid.clrdkstown.Keys;
 
-public class SetDroppableCommand extends TownCommand {
+public class Commandsetdroppable extends TownCommand {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) throws NotEnoughArgumentsException, BadArgumentException {
@@ -51,6 +56,14 @@ public class SetDroppableCommand extends TownCommand {
 		}
 		player.sendMessage(ChatColor.RED + "Item does not have a droppable tag.");
 		return true;
+	}
+	
+	@Override
+	public List<String> tabComplete(Server server, CommandSender sender, Command command, String label, String[] args) {
+		if (args.length == 1) {
+			return Arrays.asList("true", "false");
+		}
+		return Collections.emptyList();
 	}
 	
 }

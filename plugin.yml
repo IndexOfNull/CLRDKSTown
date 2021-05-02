@@ -10,6 +10,10 @@ commands:
       usage: "/town"
       permission: clrdkstown.town
    debugpick:
-      description: Just for testing
+      description: Forcefully give a pick to a player.
       usage: "/debugpick [player]"
       permission: clrdkstown.debugpick
+   setdroppable:
+      description: Make an undroppable item droppable, or vice versa.
+      usage: "/setdroppable <true/false>"
+      permission: clrdkstown.setdroppable

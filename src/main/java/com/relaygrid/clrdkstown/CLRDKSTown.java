@@ -1,5 +1,7 @@
 package com.relaygrid.clrdkstown;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,8 +20,6 @@ public class CLRDKSTown extends JavaPlugin {
 	
 	private static final Logger LOGGER = Logger.getLogger("CLRDKSTown");
 	FileConfiguration config = getConfig();
-	private static DebugGivePick MC = new DebugGivePick();
-	private static SetDroppableCommand MC2 = new SetDroppableCommand();
 	
 	public static CLRDKSTown getInstance() {
 		return pluginInstance;
@@ -50,24 +50,58 @@ public class CLRDKSTown extends JavaPlugin {
 	}
 	
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		return onTownCommand(sender.getServer(), sender, command, label, args);
+	public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+		return onTownTabComplete(sender.getServer(), sender, command, label, args, CLRDKSTown.class.getClassLoader(), "com.relaygrid.clrdkstown.commands.Command");
 	}
 	
-	public boolean onTownCommand(Server server, CommandSender sender, Command command, String label, String[] args) {
-		try { //Fix this
-			if (command.getName().equals("debugpick")) {
-				return MC.onCommand(sender, command, label, args);
-			} else {
-				return MC2.onCommand(sender, command, label, args);
-			}
+	public List<String> onTownTabComplete(Server server, CommandSender sender, Command command, String label, String[] args, ClassLoader classLoader, String commandPath) {
+
+		final TownCommand cmd; //thanks EssentialsX for this brilliantly simple way of auto-registering commands
+		try {
+			cmd = (TownCommand) classLoader.loadClass(commandPath + command.getName()).newInstance();
+		} catch (Exception ex) {
+			sender.sendMessage("Command class not loaded or does not exist!");
+			LOGGER.log(Level.SEVERE, "Command class not loaded or does not exist!");
+			return Collections.emptyList();
+		}
+		
+		try {
+			return cmd.tabComplete(server, sender, command, label, args);
+		} catch (Exception e) {
+			return Collections.emptyList();
+		}
+		
+	}
+	
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		return onTownCommand(sender.getServer(), sender, command, label, args, CLRDKSTown.class.getClassLoader(), "com.relaygrid.clrdkstown.commands.Command");
+	}
+	
+	public boolean onTownCommand(Server server, CommandSender sender, Command command, String label, String[] args, ClassLoader classLoader, String commandPath) {
+		
+		final TownCommand cmd; //thanks EssentialsX for this brilliantly simple way of auto-registering commands
+		try {
+			cmd = (TownCommand) classLoader.loadClass(commandPath + command.getName()).newInstance();
+		} catch (Exception ex) {
+			sender.sendMessage("Command class not loaded or does not exist!");
+			LOGGER.log(Level.SEVERE, "Command class not loaded or does not exist!");
+			return true;
+		}
+		
+		try {
+			cmd.onCommand(sender, command, label, args);
 		} catch (NotEnoughArgumentsException e) {
 			sender.sendMessage(command.getUsage());
 		} catch (PlayerNotFoundException e) {
 			sender.sendMessage("Player not found");
 		} catch (BadArgumentException e) {
 			sender.sendMessage("Bad argument");
+		} catch (Exception e) {
+			sender.sendMessage("Unknown error");
+			return true;
 		}
+
 		return true;
 	}
 	
