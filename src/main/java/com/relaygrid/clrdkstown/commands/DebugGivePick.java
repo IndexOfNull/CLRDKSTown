@@ -32,7 +32,8 @@ public class DebugGivePick extends TownCommand {
 
 		sender.sendMessage(player.getDisplayName() + " " + player.getHealth());
 		
-		NamespacedKey key = new NamespacedKey(CLRDKSTown.getInstance(), Keys.CAN_BE_DROPPED);
+		NamespacedKey canBeDroppedKey = new NamespacedKey(CLRDKSTown.getInstance(), Keys.CAN_BE_DROPPED);
+		NamespacedKey itemOwnerKey = new NamespacedKey(CLRDKSTown.getInstance(), Keys.ITEM_OWNER);
 		ItemStack stack = new ItemStack(Material.DIAMOND_PICKAXE);
 		
 		ItemMeta itemMeta = stack.getItemMeta();
@@ -40,7 +41,8 @@ public class DebugGivePick extends TownCommand {
 		itemMeta.setLore(Arrays.asList("This item may not be discarded."));
 		
 		PersistentDataContainer metaContainer = itemMeta.getPersistentDataContainer();
-		metaContainer.set(key, PersistentDataType.INTEGER, 0);
+		metaContainer.set(canBeDroppedKey, PersistentDataType.INTEGER, 0);
+		metaContainer.set(itemOwnerKey, PersistentDataType.STRING, player.getUniqueId().toString());
 		stack.setItemMeta(itemMeta);
 		
 		player.getInventory().addItem(stack);
