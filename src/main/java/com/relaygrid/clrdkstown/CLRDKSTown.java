@@ -75,6 +75,7 @@ public class CLRDKSTown extends JavaPlugin {
 		final TownCommand cmd; //thanks EssentialsX for this brilliantly simple way of auto-registering commands
 		try {
 			cmd = (TownCommand) classLoader.loadClass(commandPath + command.getName()).newInstance();
+			cmd.setPluginInstance(this);
 		} catch (Exception ex) {
 			sender.sendMessage("Command class not loaded or does not exist!");
 			LOGGER.log(Level.SEVERE, "Command class not loaded or does not exist!");
@@ -91,6 +92,7 @@ public class CLRDKSTown extends JavaPlugin {
 			sender.sendMessage("Bad argument");
 		} catch (Exception e) {
 			sender.sendMessage("Unknown error");
+			e.printStackTrace();
 			return true;
 		}
 

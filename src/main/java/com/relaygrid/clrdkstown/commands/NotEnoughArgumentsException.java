@@ -1,5 +1,6 @@
 package com.relaygrid.clrdkstown.commands;
 
+@SuppressWarnings("serial")
 public class NotEnoughArgumentsException extends Exception {
 	public NotEnoughArgumentsException() {
 		super("");

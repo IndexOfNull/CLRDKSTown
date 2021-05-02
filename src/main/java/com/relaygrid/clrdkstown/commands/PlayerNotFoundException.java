@@ -1,5 +1,6 @@
 package com.relaygrid.clrdkstown.commands;
 
+@SuppressWarnings("serial")
 public class PlayerNotFoundException extends Exception {
 	public PlayerNotFoundException() {
 		super("");

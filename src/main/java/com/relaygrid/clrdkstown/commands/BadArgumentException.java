@@ -1,5 +1,6 @@
 package com.relaygrid.clrdkstown.commands;
 
+@SuppressWarnings("serial")
 public class BadArgumentException extends Exception {
 	public BadArgumentException() {
 		super("");

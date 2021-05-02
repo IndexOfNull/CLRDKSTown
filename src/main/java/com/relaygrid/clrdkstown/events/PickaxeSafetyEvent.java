@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,6 +13,7 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -21,6 +23,8 @@ import org.bukkit.persistence.PersistentDataType;
 
 import com.relaygrid.clrdkstown.CLRDKSTown;
 import com.relaygrid.clrdkstown.Keys;
+
+import net.md_5.bungee.api.ChatColor;
 
 public class PickaxeSafetyEvent implements Listener {
 		
@@ -143,6 +147,20 @@ public class PickaxeSafetyEvent implements Listener {
 						e.getView().setCursor(null);
 						break;
 					}
+				}
+			}
+		}
+	}
+	
+	// TODO: make this config influenced
+	@EventHandler()
+	public void onCraftItem(PrepareItemCraftEvent e) {
+		Material itemType = e.getRecipe().getResult().getType();
+		if (itemType == Material.WOODEN_PICKAXE || itemType == Material.IRON_PICKAXE || itemType == Material.GOLDEN_PICKAXE || itemType == Material.DIAMOND_PICKAXE || itemType == Material.NETHERITE_PICKAXE) {
+			e.getInventory().setResult(new ItemStack(Material.AIR));
+			for (HumanEntity he : e.getViewers()) {
+				if (he instanceof Player) {
+					((Player) he).sendMessage(ChatColor.RED + "You cannot craft that item.");
 				}
 			}
 		}
