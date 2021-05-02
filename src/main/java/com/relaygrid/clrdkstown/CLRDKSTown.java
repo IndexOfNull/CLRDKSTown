@@ -19,6 +19,7 @@ public class CLRDKSTown extends JavaPlugin {
 	private static final Logger LOGGER = Logger.getLogger("CLRDKSTown");
 	FileConfiguration config = getConfig();
 	private static DebugGivePick MC = new DebugGivePick();
+	private static SetDroppableCommand MC2 = new SetDroppableCommand();
 	
 	public static CLRDKSTown getInstance() {
 		return pluginInstance;
@@ -57,11 +58,15 @@ public class CLRDKSTown extends JavaPlugin {
 		try { //Fix this
 			if (command.getName().equals("debugpick")) {
 				return MC.onCommand(sender, command, label, args);
+			} else {
+				return MC2.onCommand(sender, command, label, args);
 			}
 		} catch (NotEnoughArgumentsException e) {
 			sender.sendMessage(command.getUsage());
 		} catch (PlayerNotFoundException e) {
 			sender.sendMessage("Player not found");
+		} catch (BadArgumentException e) {
+			sender.sendMessage("Bad argument");
 		}
 		return true;
 	}

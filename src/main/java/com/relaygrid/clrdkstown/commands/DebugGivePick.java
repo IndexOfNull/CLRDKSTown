@@ -15,6 +15,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import com.relaygrid.clrdkstown.CLRDKSTown;
+import com.relaygrid.clrdkstown.Keys;
 
 public class DebugGivePick extends TownCommand {
 	
@@ -31,11 +32,13 @@ public class DebugGivePick extends TownCommand {
 
 		sender.sendMessage(player.getDisplayName() + " " + player.getHealth());
 		
-		NamespacedKey key = new NamespacedKey(CLRDKSTown.getInstance(), "canBeDropped");
+		NamespacedKey key = new NamespacedKey(CLRDKSTown.getInstance(), Keys.CAN_BE_DROPPED);
 		ItemStack stack = new ItemStack(Material.DIAMOND_PICKAXE);
+		
 		ItemMeta itemMeta = stack.getItemMeta();
 		itemMeta.setDisplayName(ChatColor.ITALIC + "" + ChatColor.BLUE + "Starter Pickaxe");
 		itemMeta.setLore(Arrays.asList("This item may not be discarded."));
+		
 		PersistentDataContainer metaContainer = itemMeta.getPersistentDataContainer();
 		metaContainer.set(key, PersistentDataType.INTEGER, 0);
 		stack.setItemMeta(itemMeta);

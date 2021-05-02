@@ -33,4 +33,13 @@ public class TownCommand {
 		return exPlayer;
 	}
 	
+	public static Boolean parseBoolean(String arg) {
+		if (arg.equalsIgnoreCase("true") || arg.equalsIgnoreCase("yes") || arg.equalsIgnoreCase("1")) {
+			return true;
+		} else if (arg.equalsIgnoreCase("false") || arg.equalsIgnoreCase("no") || arg.equalsIgnoreCase("0")) {
+			return false;
+		}
+		return null;
+	}
+	
 }
