@@ -155,7 +155,7 @@ public class PickaxeSafetyEvent implements Listener {
 	
 	@EventHandler()
 	public void onCraftItem(PrepareItemCraftEvent e) {
-		if (e.isRepair() || !pluginInstance.getSettings().getDisablePickaxeRecipes()) {
+		if (e.isRepair() || !pluginInstance.getSettings().pickaxeCraftingAllowed()) {
 			return;
 		}
 		Recipe recipe = e.getRecipe();

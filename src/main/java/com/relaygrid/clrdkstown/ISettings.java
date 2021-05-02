@@ -4,6 +4,8 @@ public interface ISettings {
 
 	public void reloadConfig();
 	
-	public boolean getDisablePickaxeRecipes();
+	public boolean pickaxeCraftingAllowed();
+	
+	public boolean dropToEnderchestsAllowed();
 	
 }

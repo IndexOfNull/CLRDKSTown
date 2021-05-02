@@ -13,9 +13,14 @@ public class Settings implements ISettings {
 		reloadConfig();
 	}
 	
-	public boolean getDisablePickaxeRecipes() {
-		return config.getBoolean("disable-pickaxe-recipes");
+	public boolean pickaxeCraftingAllowed() {
+		return config.getBoolean("disable-pickaxe-recipes", true);
 	}
+	
+	public boolean dropToEnderchestsAllowed() {
+		return config.getBoolean("drop-to-enderchests", true);
+	}
+	
 	
 	public void reloadConfig() {
 		config.load();
