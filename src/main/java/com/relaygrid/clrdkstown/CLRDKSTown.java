@@ -16,14 +16,12 @@ import com.relaygrid.clrdkstown.events.*;
 
 public class CLRDKSTown extends JavaPlugin {
 	private static final Logger LOGGER = Logger.getLogger("CLRDKSTown");
-	FileConfiguration config = getConfig();
+	private transient Settings config;
 	
 	@Override
 	public void onEnable() {
 		//Register config
-		config.addDefault("test", true);
-		config.options().copyDefaults(true);
-		saveConfig();
+		config = new Settings(this);
 		
 		//Register commands
 		//this.getCommand("town").setExecutor(new MainCommand());
@@ -35,9 +33,13 @@ public class CLRDKSTown extends JavaPlugin {
 		LOGGER.log(Level.INFO, "Started CLRDKSTown!");
 	}
 	
+	public ISettings getSettings() {
+		return config;
+	}
+	
 	@Override
-	public void onDisable() {
-		
+	public void saveConfig() {
+		//Don't use any bukkit prepackaged config writing
 	}
 	
 	@Override

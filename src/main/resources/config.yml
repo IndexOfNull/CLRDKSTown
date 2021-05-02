@@ -1,0 +1,7 @@
+#
+# CLRDKSTown -- A custom plugin for the CLRDKS Town server.
+# Hi there!
+#
+
+# Disable the vanilla pickaxe recipes to force players into using the tier system
+disable-pickaxe-recipes: true
