@@ -21,3 +21,7 @@ commands:
       description: Set the owner of an item.
       usage: "/setowner <player>"
       permission: clrdkstown.setowner
+   townreload:
+      description: Reload CLRDKSTown
+      usage: "/townreload"
+      permission: clrdkstown.reload
