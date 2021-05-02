@@ -2,7 +2,10 @@ package com.relaygrid.clrdkstown;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -16,12 +19,15 @@ import java.util.logging.Logger;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
+
 public class TownConfig extends YamlConfiguration {
 	protected static final Logger LOGGER = Logger.getLogger("CLRDKSTown");
 	protected static final Charset UTF8 = StandardCharsets.UTF_8;
 	protected final File configFile;
 	private final AtomicInteger pendingDiskWrites = new AtomicInteger(0);
 	private final byte[] bytebuffer = new byte[1024];
+	protected String templateName = null;
+	private Class<?> resourceClass = TownConfig.class;
 	
 	public TownConfig(final File configFile) {
 		super();
@@ -41,6 +47,7 @@ public class TownConfig extends YamlConfiguration {
         
         if (!configFile.exists()) {
         	//create config file from template
+        	createFromTemplate();
         }
         
         try {
@@ -80,6 +87,47 @@ public class TownConfig extends YamlConfiguration {
         } catch (final Exception ex) {
         	LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
         }
+	}
+	
+	public void setConfigTemplate(String templateName) {
+		this.templateName = templateName;
+	}
+	
+	public synchronized void createFromTemplate() {
+		InputStream istr = null;
+		OutputStream ostr = null;
+		try {
+			istr = resourceClass.getResourceAsStream(templateName);
+					if (istr == null) {
+						LOGGER.log(Level.SEVERE, "Could not load configuration template!");
+						return;
+					}
+			ostr = new FileOutputStream(configFile);
+			final byte[] buffer = new byte[1024];
+			int length = 0;
+			length = istr.read(buffer);
+			while (length > 0) {
+				ostr.write(buffer, 0, length);
+				length = istr.read(buffer);
+			}
+		} catch (final IOException ex) {
+			LOGGER.log(Level.SEVERE, "Failed to write config template.");
+		} finally {
+			try {
+				if (istr != null) {
+					istr.close();
+				} 
+			} catch (final IOException ex) {
+				LOGGER.log(Level.SEVERE, "Failed to close template file.");
+			}
+			try {
+				if (ostr != null) {
+					ostr.close();
+				}
+			} catch (final IOException ex) {
+				LOGGER.log(Level.SEVERE, "Failed to close config file.");
+			}
+		}
 	}
 	
 }

@@ -9,6 +9,7 @@ public class Settings implements ISettings {
 	public Settings(CLRDKSTown pluginInstance) {
 		this.pluginInstance = pluginInstance;
 		config = new TownConfig(new File(pluginInstance.getDataFolder(), "config.yml"));
+		config.setConfigTemplate("/config.yml");
 		reloadConfig();
 	}
 	

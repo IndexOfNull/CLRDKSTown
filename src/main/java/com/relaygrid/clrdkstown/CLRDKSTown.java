@@ -23,10 +23,6 @@ public class CLRDKSTown extends JavaPlugin {
 		//Register config
 		config = new Settings(this);
 		
-		//Register commands
-		//this.getCommand("town").setExecutor(new MainCommand());
-		//this.getCommand("debugpick").setExecutor(new DebugGivePick());
-		
 		//Register listeners
 		this.getServer().getPluginManager().registerEvents(new PickaxeSafetyEvent(this), this);
 		this.getServer().getPluginManager().registerEvents(new PlayerJoined(this), this);
