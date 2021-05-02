@@ -24,9 +24,15 @@ import com.relaygrid.clrdkstown.Keys;
 
 public class PickaxeSafetyEvent implements Listener {
 		
-	private static boolean hasNoDropTag(ItemStack itemStack) {
+	private CLRDKSTown pluginInstance;
+	
+	public PickaxeSafetyEvent(CLRDKSTown instance) {
+		this.pluginInstance = instance;
+	}
+	
+	private boolean hasNoDropTag(ItemStack itemStack) {
 		try {
-			NamespacedKey key = new NamespacedKey(CLRDKSTown.getInstance(), Keys.CAN_BE_DROPPED);
+			NamespacedKey key = new NamespacedKey(pluginInstance, Keys.CAN_BE_DROPPED);
 			ItemMeta itemMeta = itemStack.getItemMeta();
 			PersistentDataContainer container = itemMeta.getPersistentDataContainer();
 
@@ -41,9 +47,9 @@ public class PickaxeSafetyEvent implements Listener {
 		}
 	}
 	
-	private static UUID getItemOwnerUUID(ItemStack itemStack) {
+	private UUID getItemOwnerUUID(ItemStack itemStack) {
 		try {
-			NamespacedKey key = new NamespacedKey(CLRDKSTown.getInstance(), Keys.ITEM_OWNER);
+			NamespacedKey key = new NamespacedKey(pluginInstance, Keys.ITEM_OWNER);
 			ItemMeta itemMeta = itemStack.getItemMeta();
 			PersistentDataContainer container = itemMeta.getPersistentDataContainer();
 
@@ -56,11 +62,11 @@ public class PickaxeSafetyEvent implements Listener {
 		}
 	}
 	
-	private static boolean playerCanDropItem(Player player, ItemStack itemStack) {
+	private boolean playerCanDropItem(Player player, ItemStack itemStack) {
 		return player.hasPermission("clrdkstown.dropbypass") || !hasNoDropTag(itemStack);
 	}
 	
-	private static boolean playerCanPickupItem(Player player, ItemStack itemStack) {
+	private boolean playerCanPickupItem(Player player, ItemStack itemStack) {
 		if (player.hasPermission("clrdkstown.ownerbypass")) {
 			return true;
 		}

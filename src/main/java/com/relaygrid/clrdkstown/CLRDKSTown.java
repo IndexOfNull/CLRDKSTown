@@ -15,19 +15,11 @@ import com.relaygrid.clrdkstown.commands.*;
 import com.relaygrid.clrdkstown.events.*;
 
 public class CLRDKSTown extends JavaPlugin {
-	
-	public static CLRDKSTown pluginInstance;
-	
 	private static final Logger LOGGER = Logger.getLogger("CLRDKSTown");
 	FileConfiguration config = getConfig();
 	
-	public static CLRDKSTown getInstance() {
-		return pluginInstance;
-	}
-	
 	@Override
 	public void onEnable() {
-		pluginInstance = this;
 		//Register config
 		config.addDefault("test", true);
 		config.options().copyDefaults(true);
@@ -37,10 +29,9 @@ public class CLRDKSTown extends JavaPlugin {
 		//this.getCommand("town").setExecutor(new MainCommand());
 		//this.getCommand("debugpick").setExecutor(new DebugGivePick());
 		
-		
 		//Register listeners
-		this.getServer().getPluginManager().registerEvents(new PlayerJoined(), this);
-		this.getServer().getPluginManager().registerEvents(new PickaxeSafetyEvent(), this);
+		this.getServer().getPluginManager().registerEvents(new PickaxeSafetyEvent(this), this);
+		this.getServer().getPluginManager().registerEvents(new PlayerJoined(this), this);
 		LOGGER.log(Level.INFO, "Started CLRDKSTown!");
 	}
 	
@@ -59,6 +50,7 @@ public class CLRDKSTown extends JavaPlugin {
 		final TownCommand cmd; //thanks EssentialsX for this brilliantly simple way of auto-registering commands
 		try {
 			cmd = (TownCommand) classLoader.loadClass(commandPath + command.getName()).newInstance();
+			cmd.setPluginInstance(this);
 		} catch (Exception ex) {
 			sender.sendMessage("Command class not loaded or does not exist!");
 			LOGGER.log(Level.SEVERE, "Command class not loaded or does not exist!");

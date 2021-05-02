@@ -14,7 +14,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import com.relaygrid.clrdkstown.CLRDKSTown;
 import com.relaygrid.clrdkstown.Keys;
 
 public class Commanddebugpick extends TownCommand {
@@ -32,8 +31,8 @@ public class Commanddebugpick extends TownCommand {
 
 		sender.sendMessage(player.getDisplayName() + " " + player.getHealth());
 		
-		NamespacedKey canBeDroppedKey = new NamespacedKey(CLRDKSTown.getInstance(), Keys.CAN_BE_DROPPED);
-		NamespacedKey itemOwnerKey = new NamespacedKey(CLRDKSTown.getInstance(), Keys.ITEM_OWNER);
+		NamespacedKey canBeDroppedKey = new NamespacedKey(pluginInstance, Keys.CAN_BE_DROPPED);
+		NamespacedKey itemOwnerKey = new NamespacedKey(pluginInstance, Keys.ITEM_OWNER);
 		ItemStack stack = new ItemStack(Material.DIAMOND_PICKAXE);
 		
 		ItemMeta itemMeta = stack.getItemMeta();

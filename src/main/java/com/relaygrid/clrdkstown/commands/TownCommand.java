@@ -12,13 +12,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 
 import com.google.common.collect.Lists;
+import com.relaygrid.clrdkstown.CLRDKSTown;
 
 public class TownCommand {
+	
+	protected transient CLRDKSTown pluginInstance; 
+	
+	public void setPluginInstance(CLRDKSTown instance) {
+		pluginInstance = instance;
+	}
 	
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) throws Exception {
 		return false;
 	}
-	
 
 	public static Player getPlayer(final Server server, final String search) throws PlayerNotFoundException {
 		Player exPlayer;

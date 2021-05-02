@@ -11,7 +11,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import com.relaygrid.clrdkstown.CLRDKSTown;
 import com.relaygrid.clrdkstown.Keys;
 
 public class Commandsetowner extends TownCommand {
@@ -34,7 +33,7 @@ public class Commandsetowner extends TownCommand {
 		Player targetPlayer;
 		targetPlayer = getPlayer(sender.getServer(), args[0]);
 		
-		NamespacedKey key = new NamespacedKey(CLRDKSTown.getInstance(), Keys.ITEM_OWNER);
+		NamespacedKey key = new NamespacedKey(pluginInstance, Keys.ITEM_OWNER);
 		ItemMeta itemMeta = currentItem.getItemMeta();
 		PersistentDataContainer metaContainer = itemMeta.getPersistentDataContainer();
 		if (metaContainer.has(key, PersistentDataType.STRING)) {

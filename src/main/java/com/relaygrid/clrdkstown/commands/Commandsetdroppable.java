@@ -16,7 +16,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import com.relaygrid.clrdkstown.CLRDKSTown;
 import com.relaygrid.clrdkstown.Keys;
 
 public class Commandsetdroppable extends TownCommand {
@@ -39,7 +38,7 @@ public class Commandsetdroppable extends TownCommand {
 			throw new BadArgumentException("Must be true or false");
 		}
 		
-		NamespacedKey key = new NamespacedKey(CLRDKSTown.getInstance(), Keys.CAN_BE_DROPPED);
+		NamespacedKey key = new NamespacedKey(pluginInstance, Keys.CAN_BE_DROPPED);
 		ItemMeta itemMeta = currentItem.getItemMeta();
 		PersistentDataContainer metaContainer = itemMeta.getPersistentDataContainer();
 		Integer value = metaContainer.get(key, PersistentDataType.INTEGER);
