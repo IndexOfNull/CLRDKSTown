@@ -21,6 +21,10 @@ public class Settings implements ISettings {
 		return config.getBoolean("drop-to-enderchests", true);
 	}
 	
+	public boolean dropToChestsAllowed() {
+		return config.getBoolean("drop-to-chests", false);
+	}
+	
 	
 	public void reloadConfig() {
 		config.load();

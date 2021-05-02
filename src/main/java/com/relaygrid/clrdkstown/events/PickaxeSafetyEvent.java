@@ -13,6 +13,8 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.Inventory;
@@ -97,15 +99,22 @@ public class PickaxeSafetyEvent implements Listener {
 		Inventory clickedInv = e.getClickedInventory();
 		Player player = (Player) e.getWhoClicked();
 		Inventory playerInv = player.getInventory();
+		Inventory topInv = e.getView().getTopInventory();
 		
-		if (!playerCanDropItem(player, cursorItem) && !clickedInv.equals(playerInv)) { //Manually moving the item
+		if (pluginInstance.getSettings().dropToEnderchestsAllowed() && topInv.getType().equals(InventoryType.ENDER_CHEST)) { //If we allow enderchest moving
+			return;
+		}
+		
+		if (!pluginInstance.getSettings().dropToChestsAllowed() || !topInv.getType().equals(InventoryType.CHEST)) { //If we can't drop to chests or if we're not working with a chest
+			if (!playerCanDropItem(player, cursorItem) && !clickedInv.equals(playerInv)) { //Manually moving the item
 				e.setCancelled(true);
+			}
+			
+			if (!playerCanDropItem(player, slotItem) && clickedInv.equals(playerInv) && e.isShiftClick()) { //Shift clicking from the player inventory
+				e.setCancelled(true);
+			}
 		}
-		
-		if (!playerCanDropItem(player, slotItem) && e.isShiftClick()) { //Shift clicking
-			e.setCancelled(true);
-		}
-		
+
 		if (!playerCanPickupItem(player, slotItem) && !clickedInv.equals(playerInv)) { //Clicking the item if it's not in the player inv and they don't own it
 			e.setCancelled(true);
 		}
@@ -142,7 +151,7 @@ public class PickaxeSafetyEvent implements Listener {
 			if (!playerCanDropItem(player, cursor) && inventory.firstEmpty() == -1) {
 				for (int slot = 0; slot < 36; slot++) { //0->35 are main inventory slots
 					ItemStack item = inventory.getItem(slot);
-					if (!playerCanDropItem(player, item)) {
+					if (playerCanDropItem(player, item)) {
 						player.getWorld().dropItemNaturally(player.getLocation(), item);
 						inventory.setItem(slot, cursor);
 						e.getView().setCursor(null);
@@ -170,7 +179,13 @@ public class PickaxeSafetyEvent implements Listener {
 				}
 			}
 		}
-
+	}
+	
+	@EventHandler()
+	public void onInventoryMove(InventoryMoveItemEvent e) { //Contrary to what you may believe, this does not fire for users
+		if (hasNoDropTag(e.getItem())) {
+			e.setCancelled(true);
+		}
 	}
 	
 }

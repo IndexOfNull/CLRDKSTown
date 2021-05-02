@@ -8,4 +8,6 @@ public interface ISettings {
 	
 	public boolean dropToEnderchestsAllowed();
 	
+	public boolean dropToChestsAllowed();
+	
 }

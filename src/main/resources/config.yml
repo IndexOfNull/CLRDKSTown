@@ -8,3 +8,8 @@ disable-pickaxe-recipes: true
 
 # Should items tagged as non-droppable be allowed to be placed in enderchests (default: true)
 drop-to-enderchests: true
+
+# Should items tagged as non-droppable be allowed to be placed in chests (default: false)
+# WARNING: This opens you up to some serious abuse like chest clogging and possible lag machines. Make sure (at least) that users can properly secure their chests from others.
+# Note: only item owners or users with the clrdkstown.ownerbypass perm will be able to remove the item from the chest
+drop-to-chest: false
