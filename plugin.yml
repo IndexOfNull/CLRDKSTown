@@ -1,0 +1,15 @@
+name: CLRDKSTown
+main: com.relaygrid.clrdkstown.CLRDKSTown
+version: 0.1
+api-version: 1.16
+authors: [RelayGrid]
+prefix: CLRDKSTown
+commands:
+   town:
+      description: The main command for CLRDKSTown.
+      usage: "/town"
+      permission: clrdkstown.town
+   debugpick:
+      description: Just for testing
+      usage: "/debugpick [player]"
+      permission: clrdkstown.debugpick
