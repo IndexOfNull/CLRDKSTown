@@ -27,7 +27,7 @@ public class Commanddebugpick extends TownCommand {
 		if (args.length < 1) {
 			player = (Player) sender;
 		} else {
-			player = getPlayer(sender.getServer(), args[0], false);
+			player = getPlayer(sender.getServer(), args[0]);
 		}
 
 		sender.sendMessage(player.getDisplayName() + " " + player.getHealth());

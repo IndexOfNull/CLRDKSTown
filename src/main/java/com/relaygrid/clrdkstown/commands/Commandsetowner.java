@@ -32,7 +32,7 @@ public class Commandsetowner extends TownCommand {
 		}
 		
 		Player targetPlayer;
-		targetPlayer = getPlayer(sender.getServer(), args[0], false);
+		targetPlayer = getPlayer(sender.getServer(), args[0]);
 		
 		NamespacedKey key = new NamespacedKey(CLRDKSTown.getInstance(), Keys.ITEM_OWNER);
 		ItemMeta itemMeta = currentItem.getItemMeta();

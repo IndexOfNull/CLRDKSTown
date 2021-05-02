@@ -20,17 +20,13 @@ public class TownCommand {
 	}
 	
 
-	public static Player getPlayer(final Server server, final String search, final boolean getOffline) throws PlayerNotFoundException {
+	public static Player getPlayer(final Server server, final String search) throws PlayerNotFoundException {
 		Player exPlayer;
 		
 		try {
 			exPlayer = server.getPlayer(UUID.fromString(search));
 		} catch (final IllegalArgumentException ex) {
-			if (getOffline) {
-				exPlayer = server.getPlayerExact(search);
-			} else {
-				exPlayer = server.getPlayer(search);
-			}
+			exPlayer = server.getPlayer(search);
 		}
 		
 		if (exPlayer == null) {
@@ -39,7 +35,6 @@ public class TownCommand {
 		
 		return exPlayer;
 	}
-	
 	
 	public static Boolean parseBoolean(String arg) {
 		if (arg.equalsIgnoreCase("true") || arg.equalsIgnoreCase("yes") || arg.equalsIgnoreCase("1")) {
