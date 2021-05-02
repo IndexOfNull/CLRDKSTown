@@ -17,3 +17,7 @@ commands:
       description: Make an undroppable item droppable, or vice versa.
       usage: "/setdroppable <true/false>"
       permission: clrdkstown.setdroppable
+   setowner:
+      description: Set the owner of an item.
+      usage: "/setowner <player>"
+      permission: clrdkstown.setowner
