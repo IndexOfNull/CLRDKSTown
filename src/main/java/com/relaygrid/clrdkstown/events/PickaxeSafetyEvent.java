@@ -22,10 +22,10 @@ import com.relaygrid.clrdkstown.CLRDKSTown;
 public class PickaxeSafetyEvent implements Listener {
 	
 	private static boolean hasNoDropTag(Item item) {
-		return hasNoDropTag(item.getItemStack());
+		return playerCanDropItem(item.getItemStack());
 	}
 	
-	private static boolean hasNoDropTag(ItemStack itemStack) {
+	private static boolean playerCanDropItem(ItemStack itemStack) {
 		try {
 			NamespacedKey key = new NamespacedKey(CLRDKSTown.getInstance(), "canBeDropped");
 			ItemMeta itemMeta = itemStack.getItemMeta();
@@ -42,13 +42,18 @@ public class PickaxeSafetyEvent implements Listener {
 		}
 	}
 	
+	private static boolean playerCanDropItem(Player player, ItemStack itemStack) {
+		return player.hasPermission("clrdkstown.dropbypass") || !playerCanDropItem(itemStack);
+	}
+	
 	@EventHandler
 	public void onDropItem(PlayerDropItemEvent e) {
-		if (hasNoDropTag(e.getItemDrop())) {
+		if (!playerCanDropItem(e.getPlayer(), e.getItemDrop().getItemStack())) {
 			e.setCancelled(true);
 		}
 	}
 	
+	// Ensure that the player cannot move or shift-click a non-droppable item
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPickaxeClick(InventoryClickEvent e) {
 		ItemStack cursorItem = e.getCursor();
@@ -57,35 +62,37 @@ public class PickaxeSafetyEvent implements Listener {
 		Player player = (Player) e.getWhoClicked();
 		Inventory playerInv = player.getInventory();
 		
-		if (hasNoDropTag(cursorItem)) { //Manually moving the item
+		if (!playerCanDropItem(player, cursorItem)) { //Manually moving the item
 			if (!clickedInv.equals(playerInv)) {
 				e.setCancelled(true);
 			}
 		}
 		
-		if (hasNoDropTag(slotItem) && e.isShiftClick()) { //Shift clicking
+		if (!playerCanDropItem(player, slotItem) && e.isShiftClick()) { //Shift clicking
 			e.setCancelled(true);
 		}
 		
 	}
 	
+	// Ensures drag events are properly trapped
 	@EventHandler()
 	public void onPickaxeDrag(InventoryDragEvent e) {
-		if (hasNoDropTag(e.getOldCursor())) {
+		if (!playerCanDropItem((Player) e.getWhoClicked(), e.getOldCursor())) {
 			e.setCancelled(true);
 		}
 	}
 	
+	// Ensures that the player cannot dispose of non-droppable items by keeping them in their cursor.
 	@EventHandler()
 	public void onInventoryClose(InventoryCloseEvent e) {
 		ItemStack cursor = e.getView().getCursor();
 		Player player = (Player) e.getPlayer();
 		Inventory inventory = player.getInventory();
 		if (!cursor.getType().equals(Material.AIR)) {
-			if (hasNoDropTag(cursor) && inventory.firstEmpty() == -1) {
+			if (!playerCanDropItem(player, cursor) && inventory.firstEmpty() == -1) {
 				for (int slot = 0; slot < 36; slot++) { //0->35 are main inventory slots
 					ItemStack item = inventory.getItem(slot);
-					if (!hasNoDropTag(item)) {
+					if (!playerCanDropItem(item)) {
 						player.getWorld().dropItemNaturally(player.getLocation(), item);
 						inventory.setItem(slot, cursor);
 						e.getView().setCursor(null);
