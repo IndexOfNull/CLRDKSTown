@@ -1,5 +1,6 @@
 package com.relaygrid.clrdkstown.commands;
 
+import java.util.Arrays;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -38,6 +39,7 @@ public class Commandsetowner extends TownCommand {
 		PersistentDataContainer metaContainer = itemMeta.getPersistentDataContainer();
 		if (metaContainer.has(key, PersistentDataType.STRING)) {
 			metaContainer.set(key, PersistentDataType.STRING, targetPlayer.getUniqueId().toString());
+			itemMeta.setLore(Arrays.asList("This item may not be discarded.", ChatColor.DARK_GRAY + "Owner: " + player.getName()));
 			currentItem.setItemMeta(itemMeta);
 			player.sendMessage(ChatColor.GREEN + "Item's owner was updated successfully.");
 			return true;

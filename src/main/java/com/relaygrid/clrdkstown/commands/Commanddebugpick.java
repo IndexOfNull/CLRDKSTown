@@ -2,7 +2,6 @@ package com.relaygrid.clrdkstown.commands;
 
 
 import java.util.Arrays;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -37,7 +36,7 @@ public class Commanddebugpick extends TownCommand {
 		
 		ItemMeta itemMeta = stack.getItemMeta();
 		itemMeta.setDisplayName(ChatColor.ITALIC + "" + ChatColor.BLUE + "Starter Pickaxe");
-		itemMeta.setLore(Arrays.asList("This item may not be discarded."));
+		itemMeta.setLore(Arrays.asList("This item may not be discarded.", ChatColor.DARK_GRAY + "Owner: " + player.getName()));
 		
 		PersistentDataContainer metaContainer = itemMeta.getPersistentDataContainer();
 		metaContainer.set(canBeDroppedKey, PersistentDataType.INTEGER, 0);
