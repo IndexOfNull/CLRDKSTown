@@ -10,4 +10,16 @@ public interface ISettings {
 	
 	public boolean dropToChestsAllowed();
 	
+	public boolean dropToOtherInventoriesAllowed();
+	
+	public boolean preventItemMovement();
+	
+	public boolean preventAnvilRepair();
+	
+	public boolean shouldIgnoreOwners();
+	
+	public boolean dropToGroundAllowed();
+	
+	public boolean allowDroppingIfNotOwned();
+	
 }

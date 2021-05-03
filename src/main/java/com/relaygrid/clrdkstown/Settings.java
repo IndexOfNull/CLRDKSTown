@@ -25,6 +25,29 @@ public class Settings implements ISettings {
 		return config.getBoolean("drop-to-chests", false);
 	}
 	
+	public boolean preventItemMovement() {
+		return config.getBoolean("prevent-item-movement", true);
+	}
+	
+	public boolean dropToOtherInventoriesAllowed() {
+		return config.getBoolean("drop-to-other-inventories", false);
+	}
+	
+	public boolean preventAnvilRepair() {
+		return config.getBoolean("prevent-anvil-repair", true);
+	}
+	
+	public boolean shouldIgnoreOwners() {
+		return config.getBoolean("ignore-owners", false);
+	}
+	
+	public boolean dropToGroundAllowed() {
+		return config.getBoolean("drop-to-ground", false);
+	}
+	
+	public boolean allowDroppingIfNotOwned() {
+		return config.getBoolean("allow-drop-if-not-owned", true);
+	}
 	
 	public void reloadConfig() {
 		config.load();

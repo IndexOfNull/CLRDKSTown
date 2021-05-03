@@ -3,13 +3,36 @@
 # Hi there!
 #
 
+# Should items tagged as non-droppable be able to be dropped onto the ground. (default: false)
+drop-to-ground: false
+
 # Disable the vanilla pickaxe recipes to force players into using the tier system (default: true)
 disable-pickaxe-recipes: true
 
 # Should items tagged as non-droppable be allowed to be placed in enderchests (default: true)
+# Note: users will still be able to remove items from enderchests; this only applies to people placing items.
 drop-to-enderchests: true
 
-# Should items tagged as non-droppable be allowed to be placed in chests (default: false)
-# WARNING: This opens you up to some serious abuse like chest clogging and possible lag machines. Make sure (at least) that users can properly secure their chests from others.
+# Should users be able to drop items with no-drop tags that they do not own (default: true)
+allow-drop-if-not-owned: true
+
+# ============================================================================================ #
+# DANGER ZONE                                                                                  #
+# Changing these from their defaults may have profound impacts on lag or gameplay security.    #
+# ============================================================================================ #
+
 # Note: only item owners or users with the clrdkstown.ownerbypass perm will be able to remove the item from the chest
-drop-to-chest: false
+# Should items tagged as non-droppable be allowed to be placed in chests (default: false)
+drop-to-chests: false
+
+# Should items tagged as non-droppable be allowed into inventories that are not chests (hoppers, anvils, etc) (default: false)
+drop-to-other-inventories: false
+
+# Should items tagged as non-droppable be prevented from moving into other inventories (e.g. through hoppers) (default: true)
+prevent-item-movement: true
+
+# Should items tagged as non-droppable be repairable/renamable in an anvil (default: true)
+prevent-anvil-repair: true
+
+# Should people be able to pick up items that they are not the owner of? (default: false)
+ignore-owners: false
